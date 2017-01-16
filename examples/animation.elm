@@ -13,7 +13,7 @@ graphics (r, s) = collage 400 400
                     scale (toFloat s / 100) dashedCircle
                   ]
 
-main = Signal.map graphics Mouse.position
+main = graphics(0, 100)
 
 
 

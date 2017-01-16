@@ -1,0 +1,17 @@
+.reveal .ref-image {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.reveal {
+  font-size: 38px;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  text-transform: none;
+}
+
+.reveal table {
+  font-size: 32px;
+}

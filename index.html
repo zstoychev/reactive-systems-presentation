@@ -1,50 +1,688 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>Reactive Programming and Systems</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/reactive.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h2>Reactive Programming and Systems</h2>
+        </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+        <section>
+          <h2>Reactive Group</h2>
+          <ul>
+            <li>Managing data flows</li>
+            <li>Messaging technologies, Data streaming</li>
+            <li>Concurrency &amp; concurrency models</li>
+            <li>Distributed systems</li>
+            <li>Functional programming and abstractions</li>
+            <li>Resilience and fault-tolerance</li>
+            <li>Design & Architecture</li>
+            <li>Domain-Driven Design</li>
+            <li>Data consistency &amp; storage</li>
+            <li>...</li>
+          </ul>
+        </section>
 
-		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				history: true,
+        <section>
+          <h2>About me</h2>
+          <p>Zdravko Stoychev</p>
+          <p>
+            <img src="images/sofia-university.png" alt="" class="ref-image" style="background: white" height="150" />
+            <img src="images/hacker-works.svg" alt="" class="ref-image" />
+          </p>
+          <ul>
+            <li><a href="https://github.com/zstoychev">github.com/zstoychev</a></li>
+            <li><a href="https://twitter.com/ZdravkoStoychev">twitter.com/ZdravkoStoychev</a></li>
+          </ul>
+        </section>
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+        <section>
+          <dl>
+            <dt>reactive</dt>
+            <dd>1. Showing a response to a stimulus</dd>
+            <dd>2. Acting in response to a situation rather than creating or controlling it</dd>
+          </dl>
+        </section>
+
+        <section>
+          <h2>On the Development of Reactive Systems</h2>
+
+          <ul>
+            <li>Transformational vs reactive dichotomy</li>
+            <li class="fragment">Transformational:
+              <ul>
+                <li>accepts inputs -> performs transformations -> produces outputs</li>
+                <li>the one in control</li>
+              </ul>
+            <li class="fragment">Reactive:
+              <ul>
+                <li>repeatedly prompted by the outside world and responding to it</li>
+                <li>controlled by the outside world</li>
+              </ul>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Reactive systems are:</h2>
+          <ul>
+            <li><strong>responsive</strong></li>
+            <li>In a timely matter</li>
+            <li><strong>event-driven</strong></li>
+          </ul>
+        </section>
+
+        <section>
+          <p>
+            Reactive systems are concerned with asynchrony, concurrency, nondeterminism, distribution, real-time processing
+            <span class="fragment">and <strong>time</strong>.</span>
+          </p>
+        </section>
+
+        <section>
+          <p>Transformational systems are well-studied</p>
+
+          <p>Lambda calculus, Turing machine, structured programming, etc...</p>
+        </section>
+
+        <section>
+          <p>We are still not quite sure how to build and compose reactive systems</p>
+
+          <aside class="notes">
+            They are hard.
+          </aside>
+        </section>
+
+        <section>
+          <p>The decomposition of a reactive system results in components that are reactive themselves</p>
+        </section>
+
+        <section>
+          <h2>Reactiveness on a Local System</h2>
+        </section>
+
+        <section>
+          <h2><a href="https://stenci.la/nokome/examples/simple-sheet/">Spreadsheet</a></h2>
+        </section>
+
+        <section>
+          <pre><code class="scala">var a = 32
+var b = 10
+var c = a + b
+
+println(c) // 42
+
+a = 20
+
+println(c) // 42</code></pre>
+        </section>
+
+        <section>
+          <h2>Popular Methods of Event Handling</h2>
+
+          <p>The observer pattern & callbacks.<p>
+          <p class="fragment">(Adobe Desktop) 1/3 of code is devoted to event-handling. 1/2 of bugs are there.</p>
+        </section>
+
+        <section>
+          <h2>The observer pattern &amp; callbacks</h2>
+
+          <ul>
+            <li>Mutable state shared between observers and encapsulating components. They are coupled</li>
+            <li>Sequence of instructions (imperatively)</li>
+          </ul>
+        </section>
+
+        <section>
+          <!--<h2>The observer pattern &amp; callbacks</h2>-->
+
+          <p>Did you unregister that listener? Missed first event, accidental recursion, etc.</p>
+
+          <p>And we all know callback hell.</p>
+        </section>
+
+        <section>
+          <!--<h2>The observer pattern &amp; callbacks</h2>-->
+
+          <p><strong>Hard to compose</strong></p>
+        </section>
+
+        <section>
+          <!--<h2>The observer pattern &amp; callbacks</h2>-->
+
+          <p>Hard to Follow:</p>
+
+          <p>Imperative flow + Event dispatching order + Listener registration order (all <strong>time</strong> related).</p>
+        </section>
+
+        <section>
+          <aside class="notes">
+            We need to gain control on time.
+          </aside>
+
+          <h2>Melting Clocks</h2>
+
+          <p><img src="images/the-persistence-of-memory.jpeg" alt="" height="300"/></p>
+
+          <blockquote style="font-size: 0.7em">
+            ...And then one day you find ten years have got behind you<br/>
+            No one told you when to run, you missed the starting gun...
+          </blockquote>
+        </section>
+
+        <section>
+          <h2>Functional Programming</h2>
+          <h3>The Time Bender</h3>
+
+          <ul>
+            <li>Eliminate mutability and side effects => eliminate the impact of time on the control flow</li>
+            <li class="fragment">Describe programs and dependencies in terms of declarative expressions</li>
+            <li class="fragment">Work on a snapshot of time</li>
+            <li class="fragment"><strong>Composable</strong></li>
+            <li class="fragment">Powerful and composable abstractions</li>
+            <li class="fragment">We need immutable data</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Immutability Changes Everything</h2>
+        </section>
+
+        <section>
+          <h2>Elm example</h2>
+        </section>
+
+        <section>
+          <h2>RxJS example</h2>
+
+          <pre><code class="typescript">userInputMap&lt;T&gt;(term$: Observable&lt;string&gt;, debounceDuration = 400,
+            to: string =&gt; Observable&lt;T&gt;): Observable&lt;T&gt; {
+  return term$.debounceTime(debounceDuration)
+              .distinctUntilChanged()
+              .switchMap(to);
+}
+
+this.searchResults$ = userInputMap(this.termInput.valueChanges,
+            t => searchService.resultsFor(t));</code></pre>
+        </section>
+
+        <section>
+          <h2>Composed reactive components form a <strong>flow of data</strong></h2>
+
+          <p>Reactive systems propagate change</p>
+        </section>
+
+        <section>
+          <h2>Let’s Go Distributed</h2>
+        </section>
+
+        <section>
+          <p>We have thousands and sometimes even millions of users.</p>
+          <p>We need to <strong>scale up</strong>.</p>
+
+          <aside class="notes">
+            if all is great
+          </aside>
+        </section>
+
+        <section>
+          <h1>Elasticity</h1>
+
+          <ul>
+            <li>Scalable system design.</li>
+            <li><strong>Scale up</strong> when more users are coming.</li>
+            <li><strong>Scale down</strong> on less active periods to save resources.</li>
+            <li>Our system stays <strong>responsive</strong>.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>But... The Eight Fallacies of Distributed Computing</h2>
+          <h3>by Peter Deutsch</h3>
+
+          <ol>
+            <li>The network is reliable</li>
+            <li>Latency is zero</li>
+            <li>Bandwidth is infinite</li>
+            <li>The network is secure</li>
+            <li>Topology doesn’t change</li>
+            <li>There is one administrator</li>
+            <li>Transport cost is zero</li>
+            <li>The network is homogeneous</li>
+          </ol>
+        </section>
+
+        <section>
+          <blockquote>&ldquo;We only know how things were not how they are now&rdquo;</blockquote>
+          <p>― Joe Armstrong</p>
+        </section>
+
+        <section>
+          <h2>The real world</h2>
+
+          <ul>
+            <li>We only know how things were not how they are now.</li>
+            <li>Light, sound, electricity, all waves carry information, but take time to travel.</li>
+            <li>Sometimes they won’t reach us and we’ll miss them (for many reasons).</li>
+            <li>Our world is asynchronous and highly parallel.</li>
+            <li class="fragment">Bugs. We can’t trust ourselves.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Summary of the real world for programmers</h2>
+
+          <ul>
+            <li>Things fail</li>
+            <li>Messages travel with variable latency and asynchronously</li>
+            <li>The reality is eventually consistent</li>
+          </ul>
+
+          <aside class="notes">
+            Let’s look at each of these
+          </aside>
+        </section>
+
+        <section>
+          <h2>Resiliency</h2>
+
+          <p>To stay responsive reactive systems should:</p>
+
+          <ul>
+            <li>respond even in the face of failure (if possible)</li>
+            <li>(Even with just a failure message, it’s still very useful.);</li>
+            <li>take actions to recover themselves;</li>
+            <li><strong>react to failure</strong>.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Resiliency from top to bottom</h2>
+
+          <p class="fragment">We must design our user interfaces with failures in mind.</p>
+
+          <aside class="notes">
+            <ul>
+              <li>Don’t load non-working services (if they are non-essential).</li>
+              <li>Keep users up to date with the problems. They will understand.</li>
+              <li>You might be able to delay some actions.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Latency and Failure. Synchronous and Asynchronous Thinking</h2>
+        </section>
+
+        <section>
+          <table>
+            <tr>
+              <th>Activity</th>
+              <th>Latency (ns)</th>
+            </tr>
+            <tr>
+              <td>L1 cache reference</td>
+              <td>0.5</td>
+            </tr>
+            <tr>
+              <td>Branch mispredict</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>L2 cache reference</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>Mutex lock/unlock</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>Main memory reference</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>Compress 1K bytes with Zippy</td>
+              <td>3,000</td>
+            </tr>
+            <tr>
+              <td>Round trip within same datacenter</td>
+              <td>500,000</td>
+            </tr>
+            <tr>
+              <td>Send packet CA->Netherlands</td>
+              <td>150,000,000</td>
+            </tr>
+          </table>
+        </section>
+
+        <section>
+          <table>
+            <tr>
+              <th>Activity</th>
+              <th>Latency (ns)</th>
+              <th>Latency (scaled)</th>
+            </tr>
+            <tr>
+              <td>L1 cache reference</td>
+              <td>0.5</td>
+              <td>10 ms</td>
+            </tr>
+            <tr>
+              <td>Branch mispredict</td>
+              <td>5</td>
+              <td>100 ms</td>
+            </tr>
+            <tr>
+              <td>L2 cache reference</td>
+              <td>7</td>
+              <td>140 ms</td>
+            </tr>
+            <tr>
+              <td>Mutex lock/unlock</td>
+              <td>25</td>
+              <td>500 ms</td>
+            </tr>
+            <tr>
+              <td>Main memory reference</td>
+              <td>100</td>
+              <td>2 seconds</td>
+            </tr>
+            <tr>
+              <td>Compress 1K bytes with Zippy</td>
+              <td>3,000</td>
+              <td>1 minute</td>
+            </tr>
+            <tr>
+              <td>Round trip within same datacenter</td>
+              <td>500,000</td>
+              <td>2.78 hours</td>
+            </tr>
+            <tr>
+              <td>Send packet CA->Netherlands</td>
+              <td>150,000,000</td>
+              <td>34.7 days</td>
+            </tr>
+          </table>
+        </section>
+
+        <section>
+          <p>But we often threat these the same in our programs.</p>
+
+          <p class="fragment">Remote Procedure Calls (RPC) – synchronous and blocking.</p>
+
+          <p class="fragment">Introduces coupling between threads on two different machines.</p>
+        </section>
+
+        <section>
+          <h2>A Note on Distributed Computing – Jim Waldo</h2>
+
+          <ul>
+            <li>Latency holds execution resources (threads, memory)</li>
+            <li>(Partial) failures</li>
+            <li>Concurrent and nondeterministic</li>
+          </ul>
+
+          <p>Waldo: We must threat distributed calls specially</p>
+        </section>
+
+        <section>
+          <h2>One More Thing: Threads and Resources</h2>
+
+          <p>Switching between threads (context switching) is expensive. It breaks the CPU’s magic.</p>
+          <p class="fragment"><strong>Concurrency with threads is very hard</strong> – The Problem with Threads by Edward Lee</p>
+        </section>
+
+        <section>
+          <h2>Asynchronous Message Passing</h2>
+        </section>
+
+        <section>
+          <ul>
+            <li>Decreased coupling (receiver can choose how to handle the message)</li>
+            <li class="fragment">Parallelize computations and combine back the results</li>
+            <li class="fragment">Messages become an object in our system we can manage</li>
+            <li class="fragment">Dynamic routing and transformation; load balancing</li>
+            <li class="fragment">Streams of messages</li>
+            <li class="fragment">Error-handling</li>
+            <li class="fragment">Reactor and Proactor patterns – (low-level) asynchronous message IO</li>
+          </ul>
+
+          <aside class="notes">
+            People and the world communicate with messages
+
+            A very different and very fun world
+          </aside>
+        </section>
+
+        <section>
+          <h2>Reactive systems</h2>
+
+          <p><img src="images/reactive-traits.svg" alt="" style="background: white; border-radius: 20px" /></p>
+        </section>
+
+        <section>
+          <h2>What about events?</h2>
+
+          <p class="fragment">Events can be propagated in the system as messages.</p>
+        </section>
+
+        <section>
+          <h2>Elasticity</h2>
+        </section>
+
+        <section>
+          <p><img src="images/amdahls-law.svg" alt="" /></p>
+        </section>
+
+        <section>
+          <h2>Universal Scalability Law</h2>
+          <h4>(Because... latency)</h4>
+
+          <p><img src="images/amdahl-vs-gunther-laws.jpeg" alt="" height="500"></p>
+        </section>
+
+        <section>
+          <h2>Services Replication</h2>
+
+          <ul>
+            <li>Location transparency (Jim Waldo)</li>
+            <li class="fragment">How many copies for a given load? Little’s Law:
+              <pre>L = λW,
+λ: request/s, W: avg. request process time,
+L: number of replica workers we need so that queues don’t fill up</pre></li>
+            <li class="fragment">Use bounded queues (and send rejection immediately)</li>
+            <li class="fragment">Alternative: track resources usage (memory, CPU, etc) (with messages)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Resilience</h2>
+        </section>
+
+        <section>
+          <ul>
+            <li>Replicate and isolate</li>
+            <li class="fragment">Distribute in greater distance. Failures can cascade locally</li>
+            <li class="fragment">Send failure messages as soon as possible</li>
+            <li class="fragment">Client component can then try alternatives (cache, inaccurate service) or return failure faster</li>
+            <li class="fragment">On failure don’t reconnect at once. Add randomness and increasing timeout</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Cascading Failures</h2>
+
+          <aside class="notes">
+            RPC
+          </aside>
+        </section>
+
+        <section>
+          <h2>Circuit Breaker</h2>
+
+          <p><img src="images/circuit-breaker-states.png" alt="" style="background: white; border-radius: 15px" /></p>
+        </section>
+
+        <section>
+          <h2>Supervision</h2>
+          <p>Helps resolving failures locally.</p>
+
+          <ul class="fragment">
+            <li>Fix known failures</li>
+            <li>Scale up and down depending on load</li>
+            <li>Detect strange behaviour</li>
+          </ul>
+        </section>
+
+        <section>
+          <p><img src="images/hello-it.jpeg" alt="" height="400"></p>
+          <p class="fragment">If too many times -> escalate to supervisor’s supervisor.</p>
+        </section>
+
+        <section>
+          <h2>Responsiveness</h2>
+        </section>
+
+        <section>
+          <p>Use bounded latency and timeouts.</p>
+          <p>Greater than expected? -> fail.</p>
+        </section>
+
+        <section>
+          <h2>Parallelize</h2>
+
+          <pre><code class="scala">val user = users.find(userId)
+val product = products.find(productId)
+
+dispatchOrder(product, user.name, user.address)</code></pre>
+        </section>
+
+        <section>
+          <h2>Parallelize</h2>
+
+          <pre><code class="scala">val userFuture: Future[User] = users.find(userId)
+val productFuture: Future[Product] = products.find(productId)
+
+for {
+  user &lt;- userFuture
+  product &lt;- productFuture
+} yield dispatchOrder(product, user.name, user.address)</code></pre>
+        </section>
+
+        <section>
+          <h2>Eventual Consistency</h2>
+
+          <ul>
+            <li>The CAP theorem (we can’t always be strongly consistent)</li>
+            <li class="fragment">The (business) world has always worked with eventual consistency</li>
+            <li class="fragment">Become consistent as a group of people will do – using messages and communication</li>
+            <li class="fragment">The SAGA pattern (from the 80’s) – managing long running transactions without atomicity</li>
+            <li class="fragment">Semantic compensation in case of failure</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>How Do We Manage All That?</h2>
+
+          <p>The goal of this group is to discuss such solutions.</p>
+
+          <p>Composable abstractions, functional programming, models, tools, etc.</p>
+        </section>
+
+        <section>
+          <h2>Concurrency models</h2>
+
+          <p>Futures and Promises, Actor Model (Erlang, Akka), Communicating Sequential Processes (Go, Clojure), STM (Clojure), ...</p>
+
+          <p>Many of them are since the 70’s.</p>
+        </section>
+
+        <section>
+          <h2>Object-Oriented Programming</h2>
+
+          <p>Original OOP is reactive:</p>
+
+          <blockquote>
+            “I thought of objects being like biological cells and/or individual computers on a network, only able to communicate with messages...
+            OOP to me means only messaging, local retention and protection and hiding of state-process, and extreme late-binding of all things.”
+            ― Alan Kay
+          </blockquote>
+
+          <p>Actors implement that.</p>
+        </section>
+
+        <section>
+          <h2>Domain-Driven Design</h2>
+
+          <p>Design and program based on a model of the problem’s domain (instead of CRUD).</p>
+
+          <p class="fragment">Aggregates – entities forming a transactional boundary (no need for enormous transaction).</p>
+
+          <p class="fragment">Split large models into bounded contexts – natural boundary for a microservice.</p>
+        </section>
+
+        <section>
+          <h2>Data Storage</h2>
+
+          <p>E.g.: Record facts instead of state (CQRS, event sourcing).</p>
+
+          <p>Normalization is not necessary in an immutable data set.</p>
+        </section>
+
+        <section>
+          <h2>Reactive Streams</h2>
+
+          <p>Asynchronous stream processing with non-blocking backpressure.</p>
+
+          <p>Low-level API for composing streaming libraries.</p>
+
+          <p>We have backpressure even in TCP, why not use it?</p>
+        </section>
+
+        <section>
+          <h2>Questions?</h2>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+        transition: "fade",
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
 </html>
