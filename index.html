@@ -213,6 +213,28 @@ println(c) // 42</code></pre>
           <h2>Elm example</h2>
         </section>
 
+        <!--<section>-->
+          <!--<h2>Java Example</h2>-->
+          <!--<pre><code class="java">public Cell&lt;Integer&gt; incrDecr(Stream&lt;?&gt; incr, Stream&lt;?&gt; decr) {-->
+  <!--Stream&lt;Integer&gt; delta = incr.map(v -&gt; 1).orElse(decr.map(v -&gt; -1));-->
+
+  <!--return delta.accum(0, (dt, v) -&gt; dt + v);-->
+<!--}-->
+
+<!--public Outputs buildFlow(Inputs inputs) {-->
+  <!--Cell&lt;Integer&gt; value1 = incrDecr(inputs.plus1.sClicked, inputs.minus1.sClicked);-->
+  <!--Cell&lt;Integer&gt; value2 = incrDecr(inputs.plus2.sClicked, inputs.minus2.sClicked);-->
+
+  <!--Stream&lt;Integer&gt; sum = inputs.sum.sClicked.snapshot(-->
+      <!--value1, value2, (u, v1, v2) -&gt; v1 + v2);-->
+  <!--Stream&lt;Integer&gt; mult = inputs.mult.sClicked.snapshot(-->
+      <!--value1, value2, (u, v1, v2) -&gt; v1 * v2);-->
+
+  <!--Cell&lt;Integer&gt; result = sum.orElse(mult).hold(0);-->
+  <!--...-->
+<!--}</code></pre>-->
+        <!--</section>-->
+
         <section>
           <h2>RxJS example</h2>
 
