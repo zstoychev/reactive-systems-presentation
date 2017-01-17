@@ -49,9 +49,9 @@
           <h2>About me</h2>
           <p>Zdravko Stoychev</p>
           <p>
-            <img src="images/sofia-university.png" alt="" class="ref-image" style="background: white" height="150" />
-            <img src="images/hacker-works.svg" alt="" class="ref-image" />
+            <img src="images/sofia-university.png" alt="" class="ref-image" style="background: white; border-radius: 15px" height="125" />
           </p>
+          <p><img src="images/hacker-works.svg" alt="" class="ref-image" /></p>
           <ul>
             <li><a href="https://github.com/zstoychev">github.com/zstoychev</a></li>
             <li><a href="https://twitter.com/ZdravkoStoychev">twitter.com/ZdravkoStoychev</a></li>
@@ -159,7 +159,7 @@ println(c) // 42</code></pre>
 
           <p>Did you unregister that listener? Missed first event, accidental recursion, etc.</p>
 
-          <p>And we all know callback hell.</p>
+          <p>And we all know about callback hell.</p>
         </section>
 
         <section>
@@ -173,7 +173,7 @@ println(c) // 42</code></pre>
 
           <p>Hard to Follow:</p>
 
-          <p>Imperative flow + Event dispatching order + Listener registration order (all <strong>time</strong> related).</p>
+          <p>Imperative flow + Asynchronous events order + Listener registration order (all <strong>time</strong> related).</p>
         </section>
 
         <section>
@@ -196,7 +196,7 @@ println(c) // 42</code></pre>
           <h3>The Time Bender</h3>
 
           <ul>
-            <li>Eliminate mutability and side effects => eliminate the impact of time on the control flow</li>
+            <li class="fragment">Eliminate mutability and side effects => eliminate the impact of time on the control flow</li>
             <li class="fragment">Describe programs and dependencies in terms of declarative expressions</li>
             <li class="fragment">Work on a snapshot of time</li>
             <li class="fragment"><strong>Composable</strong></li>
@@ -238,8 +238,9 @@ println(c) // 42</code></pre>
         <section>
           <h2>RxJS example</h2>
 
-          <pre><code class="typescript">userInputMap&lt;T&gt;(term$: Observable&lt;string&gt;, debounceDuration = 400,
-            to: string =&gt; Observable&lt;T&gt;): Observable&lt;T&gt; {
+          <pre><code class="typescript">userInputMap&lt;T&gt;(term$: Observable&lt;string&gt;,
+                to: string =&gt; Observable&lt;T&gt;,
+                debounceDuration = 400): Observable&lt;T&gt; {
   return term$.debounceTime(debounceDuration)
               .distinctUntilChanged()
               .switchMap(to);
@@ -306,8 +307,10 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
           <ul>
             <li>We only know how things were not how they are now.</li>
             <li>Light, sound, electricity, all waves carry information, but take time to travel.</li>
-            <li>Sometimes they won’t reach us and we’ll miss them (for many reasons).</li>
-            <li>Our world is asynchronous and highly parallel.</li>
+            <li>Sometimes they won’t reach us and we’ll miss them.</li>
+            <li class="fragment">It’s impossible to share the same info.</li>
+            <li class="fragment">Unless we stop the world.</li>
+            <li class="fragment">Our world is asynchronous and highly parallel.</li>
             <li class="fragment">Bugs. We can’t trust ourselves.</li>
           </ul>
         </section>
@@ -392,7 +395,7 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
               <td>500,000</td>
             </tr>
             <tr>
-              <td>Send packet CA->Netherlands</td>
+              <td>Send packet CA->Netherlands->CA</td>
               <td>150,000,000</td>
             </tr>
           </table>
@@ -441,7 +444,7 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
               <td>2.78 hours</td>
             </tr>
             <tr>
-              <td>Send packet CA->Netherlands</td>
+              <td>Send packet CA->Netherlands->CA</td>
               <td>150,000,000</td>
               <td>34.7 days</td>
             </tr>
@@ -450,6 +453,8 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
 
         <section>
           <p>But we often threat these the same in our programs.</p>
+
+          <p class="fragment">We love programming the way we program<br/>transformational systems.</p>
 
           <p class="fragment">Remote Procedure Calls (RPC) – synchronous and blocking.</p>
 
@@ -657,9 +662,11 @@ for {
         <section>
           <h2>Domain-Driven Design</h2>
 
-          <p>Design and program based on a model of the problem’s domain (instead of CRUD).</p>
+          <p>Design and program based on a model of the problem’s domain (instead in CRUD).</p>
 
-          <p class="fragment">Aggregates – entities forming a transactional boundary (no need for enormous transaction).</p>
+          <aside class="notes">Many domains have been developed for years and are base on the real world.</aside>
+
+          <p class="fragment">Aggregates – entities forming a transactional boundary (no need for enormous transactions).</p>
 
           <p class="fragment">Split large models into bounded contexts – natural boundary for a microservice.</p>
         </section>

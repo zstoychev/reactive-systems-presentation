@@ -20,7 +20,26 @@ main = graphics(0, 100)
 
 
 
-arrowsInput = Signal.foldp (\arr (x, y) -> (x + arr.x * 10, y + arr.y * 10)) (0, 0) Keyboard.arrows
-period = Signal.map (\t -> floor (t / 4) % 360) (Time.every Time.millisecond)
+
+
+
+
+
+
+
+
+
+
+
+
+arrowsInput = Signal.foldp
+              (\arr (x, y) -> (x + arr.x * 10, y + arr.y * 10))
+              (0, 0)
+              Keyboard.arrows
+period = Signal.map
+         (\t -> floor (t / 4) % 360)
+         (Time.every Time.millisecond)
 periodPair = Signal.map2 (\x y -> (x, y)) period period
-periodAndMouse = Signal.map2 (\(x1, y1) (x2, y2) -> (x1 + x2, y1 + y2)) periodPair Mouse.position
+periodAndMouse = Signal.map2
+                 (\(x1, y1) (x2, y2) -> (x1 + x2, y1 + y2))
+                 periodPair Mouse.position
