@@ -1,91 +1,107 @@
+import java.awt.*;
+import java.util.function.BiFunction;
+
 import javax.swing.*;
 
-import java.awt.*;
-import java.util.stream.*;
-
+import nz.sodium.Cell;
 import nz.sodium.Stream;
-import swidgets.*;
-import nz.sodium.*;
+import nz.sodium.Transaction;
+import nz.sodium.Unit;
+import swidgets.SButton;
+import swidgets.SLabel;
 
-class Inputs {
-	final SButton plus1;
-	final SButton minus1;
+class CalculatorInputs {
+	public final Stream<Unit> incrementValue1;
+	public final Stream<Unit> decrementValue1;
 
-	final SButton plus2;
-	final SButton minus2;
+	public final Stream<Unit> incrementValue2;
+	public final Stream<Unit> decrementValue2;
 
-	final SButton sum;
-	final SButton mult;
+	public final Stream<Unit> sum;
+	public final Stream<Unit> mult;
 
-	public Inputs(SButton plus1, SButton minus1, SButton plus2, SButton minus2, SButton sum,
-			SButton mult) {
-		this.plus1 = plus1;
-		this.minus1 = minus1;
-		this.plus2 = plus2;
-		this.minus2 = minus2;
+	public CalculatorInputs(
+			Stream<Unit> incrementValue1, Stream<Unit> decrementValue1,
+			Stream<Unit> incrementValue2, Stream<Unit> decrementValue2,
+			Stream<Unit> sum, Stream<Unit> mult) {
+		this.incrementValue1 = incrementValue1;
+		this.decrementValue1 = decrementValue1;
+		this.incrementValue2 = incrementValue2;
+		this.decrementValue2 = decrementValue2;
 		this.sum = sum;
 		this.mult = mult;
 	}
 }
 
-class Outputs {
-	final SLabel value1;
-	final SLabel value2;
-	final SLabel composedValue;
+enum CalculatorMode {
+	SUM((a, b) -> a + b),
+	MULT((a, b) -> a * b);
 
-	public Outputs(SLabel value1, SLabel value2, SLabel composedValue) {
-		this.value1 = value1;
-		this.value2 = value2;
-		this.composedValue = composedValue;
+	public final BiFunction<Integer, Integer, Integer> fn;
+
+	CalculatorMode(BiFunction<Integer, Integer, Integer> fn) {
+		this.fn = fn;
 	}
+
 }
 
-public class Example {
-	public Cell<Integer> incrDecr(Stream<?> incr, Stream<?> decr) {
+class Calculator {
+	public final Cell<Integer> value1;
+	public final Cell<Integer> value2;
+	public final Cell<CalculatorMode> mode;
+	public final Cell<Integer> result;
+
+	private Cell<Integer> incrDecr(Stream<?> incr, Stream<?> decr) {
 		Stream<Integer> delta = incr.map(v -> 1).orElse(decr.map(v -> -1));
 
 		return delta.accum(0, (dt, v) -> dt + v);
 	}
 
-	public Outputs buildFlow(Inputs inputs) {
-		Cell<Integer> value1 = incrDecr(inputs.plus1.sClicked, inputs.minus1.sClicked);
-		Cell<Integer> value2 = incrDecr(inputs.plus2.sClicked, inputs.minus2.sClicked);
+	public Calculator(CalculatorInputs inputs) {
+		value1 = incrDecr(inputs.incrementValue1, inputs.decrementValue1);
+		value2 = incrDecr(inputs.incrementValue2, inputs.decrementValue2);
 
-		Stream<Integer> sum = inputs.sum.sClicked.snapshot(value1, value2, (u, v1, v2) -> v1 + v2);
-		Stream<Integer> mult = inputs.mult.sClicked.snapshot(value1, value2, (u, v1, v2) -> v1 * v2);
+		Stream<CalculatorMode> sum = inputs.sum.map(c -> CalculatorMode.SUM);
+		Stream<CalculatorMode> mult = inputs.mult.map(c -> CalculatorMode.MULT);
+		mode = sum.orElse(mult).hold(CalculatorMode.SUM);
 
-		Cell<Integer> result = sum.orElse(mult).hold(0);
+		result = value1.lift(value2, mode, (a, b, m) -> m.fn.apply(a, b));
+	}
+}
 
-		return new Outputs(
-				new SLabel(value1.map(Object::toString)),
-				new SLabel(value2.map(Object::toString)),
-				new SLabel(result.map(Object::toString))
-		);
+public class Example {
+	private SLabel label(Cell<?> value) {
+		return new SLabel(value.map(Object::toString));
 	}
 
-	public void layout(JFrame view) {
-		Inputs inputs = new Inputs(
-				new SButton("+"),
-				new SButton("-"),
-				new SButton("+"),
-				new SButton("-"),
-				new SButton("sum"),
-				new SButton("mult")
+	private void layout(JFrame view) {
+		SButton plus1Button = new SButton("+");
+		SButton minus1Button = new SButton("-");
+		SButton plus2Button = new SButton("+");
+		SButton minus2Button = new SButton("-");
+		SButton sumButton = new SButton("sum");
+		SButton multButton = new SButton("mult");
+
+		CalculatorInputs inputs = new CalculatorInputs(
+			plus1Button.sClicked,
+			minus1Button.sClicked,
+			plus2Button.sClicked,
+			minus2Button.sClicked,
+			sumButton.sClicked,
+			multButton.sClicked
 		);
-
-		Outputs outputs = buildFlow(inputs);
-
+		Calculator calculator = new Calculator(inputs);
 
 		java.util.stream.Stream.of(
-				outputs.value1, inputs.plus1, inputs.minus1,
-				outputs.value2, inputs.plus2, inputs.minus2,
-				outputs.composedValue, inputs.sum, inputs.mult)
-				.forEach(view::add);
+				label(calculator.value1), plus1Button, minus1Button,
+				label(calculator.value2), plus2Button, minus2Button,
+				label(calculator.result), sumButton, multButton)
+			.forEach(view::add);
 	}
 
 	public static void main(String[] args) {
 		JFrame view = new JFrame("spinner");
-		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		view.setLayout(new GridLayout(3, 3));
 
 		Transaction.runVoid(() -> {
