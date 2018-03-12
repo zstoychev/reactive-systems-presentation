@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Reactive Programming and Systems</title>
+    <title>Reactiveness as a Way of Thinking About Systems</title>
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
@@ -26,35 +26,18 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h2>Reactive Programming and Systems</h2>
+          <h2>Reactiveness as a Way of Thinking About Systems</h2>
         </section>
 
         <section>
-          <h2>Reactive Group</h2>
-          <ul>
-            <li>Managing data flows</li>
-            <li>Messaging technologies, Data streaming</li>
-            <li>Concurrency &amp; concurrency models</li>
-            <li>Distributed systems</li>
-            <li>Functional programming and abstractions</li>
-            <li>Resilience and fault-tolerance</li>
-            <li>Design & Architecture</li>
-            <li>Domain-Driven Design</li>
-            <li>Data consistency &amp; storage</li>
-            <li>...</li>
-          </ul>
-        </section>
+          <h2>Plan</h2>
 
-        <section>
-          <h2>About me</h2>
-          <p>Zdravko Stoychev</p>
-          <p>
-            <img src="images/sofia-university.png" alt="" class="ref-image" style="background: white; border-radius: 15px" height="125" />
-          </p>
-          <p><img src="images/hacker-works.svg" alt="" class="ref-image" /></p>
           <ul>
-            <li><a href="https://github.com/zstoychev">github.com/zstoychev</a></li>
-            <li><a href="https://twitter.com/ZdravkoStoychev">twitter.com/ZdravkoStoychev</a></li>
+            <li>What is “Reactive”?</li>
+            <li>Reactiveness in a local/single-threaded system</li>
+            <li>Reactiveness in a distributed system (from the point of view of the Reactive Manifesto)</li>
+            <li>Achieving reactive properties</li>
+            <li>Designing reactive systems</li>
           </ul>
         </section>
 
@@ -64,32 +47,34 @@
             <dd>1. Showing a response to a stimulus</dd>
             <dd>2. Acting in response to a situation rather than creating or controlling it</dd>
           </dl>
+
+          <dl class="fragment">
+            <dt>reactive system</dt>
+            <dd>A system that responses to stimuli from the outside world and that is controlled by the outside world</dd>
+          </dl>
         </section>
 
         <section>
-          <h2>On the Development of Reactive Systems</h2>
+          <h2>On the Development of<br />Reactive Systems</h2>
+
+          <p class="fragment">Transformational vs reactive dichotomy</p>
+        </section>
+
+        <section>
+          <h2>Transformational systems</h2>
 
           <ul>
-            <li>Transformational vs reactive dichotomy</li>
-            <li class="fragment">Transformational:
-              <ul>
-                <li>accepts inputs -> performs transformations -> produces outputs</li>
-                <li>the one in control</li>
-              </ul>
-            <li class="fragment">Reactive:
-              <ul>
-                <li>repeatedly prompted by the outside world and responding to it</li>
-                <li>controlled by the outside world</li>
-              </ul>
+            <li>accepts inputs -> performs transformations -> produces outputs</li>
+            <li class="fragment">the one in control</li>
           </ul>
         </section>
 
         <section>
-          <h2>Reactive systems are:</h2>
+          <h2>Reactive systems</h2>
+
           <ul>
-            <li><strong>responsive</strong></li>
-            <li>In a timely matter</li>
-            <li><strong>event-driven</strong></li>
+            <li>repeatedly prompted by the outside world and responding to it</li>
+            <li class="fragment">controlled by the outside world</li>
           </ul>
         </section>
 
@@ -107,11 +92,20 @@
         </section>
 
         <section>
-          <p>We are still not quite sure how to build and compose reactive systems</p>
+          <p>We are still not quite sure how to build and compose/decompose reactive systems</p>
 
           <aside class="notes">
             They are hard.
           </aside>
+        </section>
+
+        <section>
+          <h2>Reactive systems are:</h2>
+          <ul>
+            <li><strong>responsive</strong></li>
+            <li class="fragment">In a timely matter</li>
+            <li class="fragment"><strong>event-driven</strong></li>
+          </ul>
         </section>
 
         <section>
@@ -139,10 +133,10 @@ println(c) // 42</code></pre>
         </section>
 
         <section>
-          <h2>Popular Methods of Event Handling</h2>
+          <h2>Reactive Programming using Imperative Methods</h2>
 
           <p>The observer pattern & callbacks.<p>
-          <p class="fragment">(Adobe Desktop) 1/3 of code is devoted to event-handling. 1/2 of bugs are there.</p>
+          <p class="fragment">A research: 1/3 of code is devoted to event-handling. 1/2 of bugs are there.</p>
         </section>
 
         <section>
@@ -150,7 +144,8 @@ println(c) // 42</code></pre>
 
           <ul>
             <li>Mutable state shared between observers and encapsulating components. They are coupled</li>
-            <li>Sequence of instructions (imperatively)</li>
+            <li class="fragment">Sequence of instructions (imperatively)</li>
+            <li class="fragment">Proactively calling methods with side-effects on other components</li>
           </ul>
         </section>
 
@@ -320,8 +315,8 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
 
           <ul>
             <li>Things fail</li>
-            <li>Messages travel with variable latency and asynchronously</li>
-            <li>The reality is eventually consistent</li>
+            <li>Messages travel asynchronously and with variable latency</li>
+            <li>The reality is eventually consistent (via facts)</li>
           </ul>
 
           <aside class="notes">
@@ -515,6 +510,10 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
         </section>
 
         <section>
+          <h2>Achieving Reactive Properties</h2>
+        </section>
+
+        <section>
           <h2>Elasticity</h2>
         </section>
 
@@ -541,6 +540,10 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
             <li class="fragment">Use bounded queues (and send rejection immediately)</li>
             <li class="fragment">Alternative: track resources usage (memory, CPU, etc) (with messages)</li>
           </ul>
+        </section>
+
+        <section>
+          <h2>Entities Sharding</h2>
         </section>
 
         <section>
@@ -618,10 +621,14 @@ for {
         </section>
 
         <section>
+          <h2>Designing Reactive Systems</h2>
+        </section>
+
+        <section>
           <h2>Eventual Consistency</h2>
 
           <ul>
-            <li>The CAP theorem (we can’t always be strongly consistent)</li>
+            <li>The FLP result/The CAP theorem (we can’t always be strongly consistent)</li>
             <li class="fragment">The (business) world has always worked with eventual consistency</li>
             <li class="fragment">Become consistent as a group of people will do – using messages and communication</li>
             <li class="fragment">The SAGA pattern (from the 80’s) – managing long running transactions without atomicity</li>
@@ -630,33 +637,7 @@ for {
         </section>
 
         <section>
-          <h2>How Do We Manage All That?</h2>
-
-          <p>The goal of this group is to discuss such solutions.</p>
-
-          <p>Composable abstractions, functional programming, models, tools, etc.</p>
-        </section>
-
-        <section>
-          <h2>Concurrency models</h2>
-
-          <p>Futures and Promises, Actor Model (Erlang, Akka), Communicating Sequential Processes (Go, Clojure), STM (Clojure), ...</p>
-
-          <p>Many of them are since the 70’s.</p>
-        </section>
-
-        <section>
-          <h2>Object-Oriented Programming</h2>
-
-          <p>Original OOP is reactive:</p>
-
-          <blockquote>
-            “I thought of objects being like biological cells and/or individual computers on a network, only able to communicate with messages...
-            OOP to me means only messaging, local retention and protection and hiding of state-process, and extreme late-binding of all things.”
-            ― Alan Kay
-          </blockquote>
-
-          <p>Actors implement that.</p>
+          <h2>Embrace the Business Domain in Your Design</h2>
         </section>
 
         <section>
@@ -666,17 +647,57 @@ for {
 
           <aside class="notes">Many domains have been developed for years and are base on the real world.</aside>
 
-          <p class="fragment">Aggregates – entities forming a transactional boundary (no need for enormous transactions).</p>
+          <p class="fragment">Aggregates – entities forming a transactional boundary (no need for enormous transactions that kill scalability).</p>
 
           <p class="fragment">Split large models into bounded contexts – natural boundary for a microservice.</p>
+
+          <p class="fragment">Embrace uncertainty.</p>
         </section>
 
         <section>
-          <h2>Data Storage</h2>
+          <h2>OOP is Not Just About the Objects</h2>
 
-          <p>E.g.: Record facts instead of state (CQRS, event sourcing).</p>
+          <blockquote>
+            “I thought of objects being like biological cells and/or individual computers on a network, only able to communicate with messages
+            (so messaging came at the very beginning)...
+            OOP to me means only messaging, local retention and protection and hiding of state-process, and extreme late-binding of all things.”
+            ― Alan Kay
+          </blockquote>
+        </section>
 
-          <p>Normalization is not necessary in an immutable data set.</p>
+        <section>
+          <h2>OOP is Much More About the Communication</h2>
+
+          <p class="fragment">Original OOP is reactive.</p>
+          <p class="fragment">Messages should follow the business domain we are modelling.</p>
+        </section>
+
+        <section>
+          <h2><a href="https://blog.redelastic.com/corporate-arts-crafts-modelling-reactive-systems-with-event-storming-73c6236f5dd7">Modelling via Event Storming</a></h2>
+
+          <p><img src="images/event-storming.png" style="background-color: white; border-radius: 10px" height="400" /></p>
+        </section>
+
+        <section>
+          <h2>Concurrency models</h2>
+
+          <p>Futures and Promises, Reactive Streams, Actor Model (Erlang, Akka), Communicating Sequential Processes (Go, Clojure), STM (Clojure), ...</p>
+
+          <p class="fragment">Many of them are since the 70’s.</p>
+
+          <p class="fragment">Use the simplest one that fits.</p>
+        </section>
+
+        <section>
+          <h2>The Actor Model</h2>
+
+          <p>Each actor is a transformational system. It gets a message as an input and outputs:</p>
+
+          <ul>
+            <li class="fragment">New actors that should be created</li>
+            <li class="fragment">Messages that should be sent to other actors (no delivery guarantees)</li>
+            <li class="fragment">The behaviour that should be used for handling the next message</li>
+          </ul>
         </section>
 
         <section>
@@ -684,9 +705,21 @@ for {
 
           <p>Asynchronous stream processing with non-blocking backpressure.</p>
 
-          <p>Low-level API for composing streaming libraries.</p>
+          <p class="fragment">Low-level API for composing streaming libraries.</p>
 
-          <p>We have backpressure even in TCP, why not use it?</p>
+          <p class="fragment">Libraries are optimized for different use-cases</p>
+
+          <p class="fragment">We have backpressure even in TCP, why not use it?</p>
+        </section>
+
+        <section>
+          <h2>Data Storage</h2>
+
+          <p>E.g.: Record facts instead of state (CQRS, event sourcing).</p>
+
+          <p class="fragment">By exchanging facts we can easily construct various optimized views of the data.</p>
+
+          <p class="fragment">Normalization is not necessary in an immutable data set.</p>
         </section>
 
         <section>
