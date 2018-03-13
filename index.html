@@ -117,7 +117,7 @@
         </section>
 
         <section>
-          <h2><a href="https://stenci.la/nokome/examples/simple-sheet/">Spreadsheet</a></h2>
+          <h2>Spreadsheet</h2>
         </section>
 
         <section>
@@ -230,26 +230,26 @@ println(c) // 42</code></pre>
 <!--}</code></pre>-->
         <!--</section>-->
 
-        <section>
-          <h2>RxJS example</h2>
+        <!--<section>-->
+          <!--<h2>RxJS example</h2>-->
 
-          <pre><code class="typescript">userInputMap&lt;T&gt;(term$: Observable&lt;string&gt;,
-                to: string =&gt; Observable&lt;T&gt;,
-                debounceDuration = 400): Observable&lt;T&gt; {
-  return term$.debounceTime(debounceDuration)
-              .distinctUntilChanged()
-              .switchMap(to);
-}
+          <!--<pre><code class="typescript">userInputMap&lt;T&gt;(term$: Observable&lt;string&gt;,-->
+                <!--to: string =&gt; Observable&lt;T&gt;,-->
+                <!--debounceDuration = 400): Observable&lt;T&gt; {-->
+  <!--return term$.debounceTime(debounceDuration)-->
+              <!--.distinctUntilChanged()-->
+              <!--.switchMap(to);-->
+<!--}-->
 
-this.searchResults$ = userInputMap(this.termInput.valueChanges,
-            t => searchService.resultsFor(t));</code></pre>
-        </section>
+<!--this.searchResults$ = userInputMap(this.termInput.valueChanges,-->
+            <!--t => searchService.resultsFor(t));</code></pre>-->
+        <!--</section>-->
 
-        <section>
-          <h2>Composed reactive components form a <strong>flow of data</strong></h2>
+        <!--<section>-->
+          <!--<h2>Composed reactive components form a <strong>flow of data</strong></h2>-->
 
-          <p>Reactive systems propagate change</p>
-        </section>
+          <!--<p>Reactive systems propagate change</p>-->
+        <!--</section>-->
 
         <section>
           <h2>Let’s Go Distributed</h2>
@@ -360,47 +360,6 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
             <tr>
               <th>Activity</th>
               <th>Latency (ns)</th>
-            </tr>
-            <tr>
-              <td>L1 cache reference</td>
-              <td>0.5</td>
-            </tr>
-            <tr>
-              <td>Branch mispredict</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td>L2 cache reference</td>
-              <td>7</td>
-            </tr>
-            <tr>
-              <td>Mutex lock/unlock</td>
-              <td>25</td>
-            </tr>
-            <tr>
-              <td>Main memory reference</td>
-              <td>100</td>
-            </tr>
-            <tr>
-              <td>Compress 1K bytes with Zippy</td>
-              <td>3,000</td>
-            </tr>
-            <tr>
-              <td>Round trip within same datacenter</td>
-              <td>500,000</td>
-            </tr>
-            <tr>
-              <td>Send packet CA->Netherlands->CA</td>
-              <td>150,000,000</td>
-            </tr>
-          </table>
-        </section>
-
-        <section>
-          <table>
-            <tr>
-              <th>Activity</th>
-              <th>Latency (ns)</th>
               <th>Latency (scaled)</th>
             </tr>
             <tr>
@@ -447,32 +406,24 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
         </section>
 
         <section>
-          <p>But we often threat these the same in our programs.</p>
-
-          <p class="fragment">We love programming the way we program<br/>transformational systems.</p>
+          <p>We love programming the way we program<br />transformational systems.</p>
 
           <p class="fragment">Remote Procedure Calls (RPC) – synchronous and blocking.</p>
 
-          <p class="fragment">Introduces coupling between threads on two different machines.</p>
-        </section>
-
-        <section>
-          <h2>A Note on Distributed Computing – Jim Waldo</h2>
-
           <ul>
-            <li>Latency holds execution resources (threads, memory)</li>
-            <li>(Partial) failures</li>
-            <li>Concurrent and nondeterministic</li>
+            <li class="fragment">Holds resources</li>
+            <li class="fragment">Introduces coupling between threads on two different machines.</li>
           </ul>
-
-          <p>Waldo: We must threat distributed calls specially</p>
         </section>
 
         <section>
-          <h2>One More Thing: Threads and Resources</h2>
-
           <p>Switching between threads (context switching) is expensive. It breaks the CPU’s magic.</p>
           <p class="fragment"><strong>Concurrency with threads is very hard</strong> – The Problem with Threads by Edward Lee</p>
+        </section>
+
+        <section>
+          <!--<h2>A Note on Distributed Computing – Jim Waldo</h2>-->
+          <p>We must treat distributed calls specially</p>
         </section>
 
         <section>
@@ -518,10 +469,14 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Elasticity</div>
+
           <p><img src="images/amdahls-law.svg" alt="" /></p>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Elasticity</div>
+
           <h2>Universal Scalability Law</h2>
           <h4>(Because... latency)</h4>
 
@@ -529,13 +484,15 @@ this.searchResults$ = userInputMap(this.termInput.valueChanges,
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Elasticity</div>
+
           <h2>Services Replication</h2>
 
           <ul>
-            <li>Location transparency (Jim Waldo)</li>
+            <li>Location transparency</li>
             <li class="fragment">How many copies for a given load? Little’s Law:
               <pre>L = λW,
-λ: request/s, W: avg. request process time,
+λ: request/s, W: avg. request process time in seconds,
 L: number of replica workers we need so that queues don’t fill up</pre></li>
             <li class="fragment">Use bounded queues (and send rejection immediately)</li>
             <li class="fragment">Alternative: track resources usage (memory, CPU, etc) (with messages)</li>
@@ -543,7 +500,11 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Elasticity</div>
+
           <h2>Entities Sharding</h2>
+
+          <p>Partition entities on different nodes (based on e.g. id hashing)</p>
         </section>
 
         <section>
@@ -551,6 +512,8 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Resilience</div>
+
           <ul>
             <li>Replicate and isolate</li>
             <li class="fragment">Distribute in greater distance. Failures can cascade locally</li>
@@ -561,6 +524,8 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Resilience</div>
+
           <h2>Cascading Failures</h2>
 
           <aside class="notes">
@@ -569,12 +534,16 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Resilience</div>
+
           <h2>Circuit Breaker</h2>
 
           <p><img src="images/circuit-breaker-states.png" alt="" style="background: white; border-radius: 15px" /></p>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Resilience</div>
+
           <h2>Supervision</h2>
           <p>Helps resolving failures locally.</p>
 
@@ -586,6 +555,8 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Resilience</div>
+
           <p><img src="images/hello-it.jpeg" alt="" height="400"></p>
           <p class="fragment">If too many times -> escalate to supervisor’s supervisor.</p>
         </section>
@@ -595,11 +566,15 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Responsiveness</div>
+
           <p>Use bounded latency and timeouts.</p>
           <p>Greater than expected? -> fail.</p>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Responsiveness</div>
+
           <h2>Parallelize</h2>
 
           <pre><code class="scala">val user = users.find(userId)
@@ -609,6 +584,8 @@ dispatchOrder(product, user.name, user.address)</code></pre>
         </section>
 
         <section>
+          <div class="breadcrumb">Achieving Responsiveness</div>
+
           <h2>Parallelize</h2>
 
           <pre><code class="scala">val userFuture: Future[User] = users.find(userId)
@@ -621,23 +598,27 @@ for {
         </section>
 
         <section>
+          <p>
+            <a href="https://www.manning.com/books/reactive-design-patterns" class="image-link">
+             <img src="images/reactive-design-patterns.png" alt="Reactive Design Patterns" height="400" />
+            </a>
+          </p>
+        </section>
+
+        <section>
           <h2>Designing Reactive Systems</h2>
         </section>
 
         <section>
           <h2>Eventual Consistency</h2>
 
-          <ul>
-            <li>The FLP result/The CAP theorem (we can’t always be strongly consistent)</li>
-            <li class="fragment">The (business) world has always worked with eventual consistency</li>
-            <li class="fragment">Become consistent as a group of people will do – using messages and communication</li>
-            <li class="fragment">The SAGA pattern (from the 80’s) – managing long running transactions without atomicity</li>
-            <li class="fragment">Semantic compensation in case of failure</li>
-          </ul>
+          <p>The FLP result/The CAP theorem</p>
         </section>
 
         <section>
           <h2>Embrace the Business Domain in Your Design</h2>
+
+          <p class="fragment">The (business) world has always worked with eventual consistency</p>
         </section>
 
         <section>
@@ -645,13 +626,22 @@ for {
 
           <p>Design and program based on a model of the problem’s domain (instead in CRUD).</p>
 
-          <aside class="notes">Many domains have been developed for years and are base on the real world.</aside>
+          <aside class="notes">Many domains have been developed for years and are based on the real world.</aside>
 
           <p class="fragment">Aggregates – entities forming a transactional boundary (no need for enormous transactions that kill scalability).</p>
 
           <p class="fragment">Split large models into bounded contexts – natural boundary for a microservice.</p>
 
           <p class="fragment">Embrace uncertainty.</p>
+        </section>
+
+        <section>
+          <h2>Domain-Driven Transactions</h2>
+
+          <ul>
+            <li class="fragment">The SAGA pattern (from the 80’s) – managing long running transactions without atomicity</li>
+            <li class="fragment">Semantic compensation in case of failure</li>
+          </ul>
         </section>
 
         <section>
@@ -666,7 +656,7 @@ for {
         </section>
 
         <section>
-          <h2>OOP is Much More About the Communication</h2>
+          <p>OOP is Much More About the Communication</p>
 
           <p class="fragment">Original OOP is reactive.</p>
           <p class="fragment">Messages should follow the business domain we are modelling.</p>
@@ -679,6 +669,18 @@ for {
         </section>
 
         <section>
+          <p>
+            <a href="http://www.informit.com/store/domain-driven-design-tackling-complexity-in-the-heart-9780321125217" class="image-link">
+              <img src="images/domain-driven-design.jpg" alt="Domain-Driven Design" height="400" />
+            </a>
+
+            <a href="https://www.manning.com/books/functional-and-reactive-domain-modeling" class="image-link">
+              <img src="images/functional-and-reactive-domain-modeling.png" alt="Functional and Reactive Domain Modeling" height="400" />
+            </a>
+          </p>
+        </section>
+
+        <section>
           <h2>Concurrency models</h2>
 
           <p>Futures and Promises, Reactive Streams, Actor Model (Erlang, Akka), Communicating Sequential Processes (Go, Clojure), STM (Clojure), ...</p>
@@ -686,30 +688,6 @@ for {
           <p class="fragment">Many of them are since the 70’s.</p>
 
           <p class="fragment">Use the simplest one that fits.</p>
-        </section>
-
-        <section>
-          <h2>The Actor Model</h2>
-
-          <p>Each actor is a transformational system. It gets a message as an input and outputs:</p>
-
-          <ul>
-            <li class="fragment">New actors that should be created</li>
-            <li class="fragment">Messages that should be sent to other actors (no delivery guarantees)</li>
-            <li class="fragment">The behaviour that should be used for handling the next message</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Reactive Streams</h2>
-
-          <p>Asynchronous stream processing with non-blocking backpressure.</p>
-
-          <p class="fragment">Low-level API for composing streaming libraries.</p>
-
-          <p class="fragment">Libraries are optimized for different use-cases</p>
-
-          <p class="fragment">We have backpressure even in TCP, why not use it?</p>
         </section>
 
         <section>
@@ -724,6 +702,68 @@ for {
 
         <section>
           <h2>Questions?</h2>
+        </section>
+
+        <section>
+          <p><a href="https://github.com/zstoychev/reactive-systems-presentation">https://github.com/zstoychev/reactive-systems-presentation</a></p>
+          <p><a href="https://zstoychev.github.io/reactive-systems.html">https://zstoychev.github.io/reactive-systems.html</a></p>
+        </section>
+
+        <section>
+          <h2>Referenced Resources (1)</h2>
+
+          <ul>
+            <li><a href="http://www.wisdom.weizmann.ac.il/%7Eharel/SCANNED.PAPERS/ReactiveSystems.pdf" rel="nofollow">On the Development of Reactive Systems</a></li>
+            <li><a href="http://www.reactivemanifesto.org/" rel="nofollow">Reactive Manifesto</a></li>
+            <li><a href="http://conal.net/papers/icfp97/" rel="nofollow">Functional Reactive Animation</a>/<a href="http://conal.net/papers/push-pull-frp/" rel="nofollow">Functional Reactive Programming</a></li>
+            <li><a href="https://www.infoq.com/presentations/elm-reactive-programming" rel="nofollow">Elm example</a></li>
+            <li><a href="https://blogs.oracle.com/jag/resource/Fallacies.html" rel="nofollow">The Eight Fallacies of Distributed Computing</a></li>
+            <li><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.41.7628&amp;rep=rep1&amp;type=pdf" rel="nofollow">A Note on Distributed Computing</a></li>
+            <li><a href="http://erlang.org/download/armstrong_thesis_2003.pdf" rel="nofollow">Making Reliable Distributed Systems in the Presence of Software Errors</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Referenced Resources (2)</h2>
+
+          <ul>
+            <li><a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-1.pdf" rel="nofollow">The Problem with Threads</a></li>
+            <li><a href="https://gist.github.com/jboner/2841832">Latency Numbers Every Programmer Should Know</a></li>
+            <li><a href="http://www-inst.eecs.berkeley.edu/%7En252/paper/Amdahl.pdf" rel="nofollow">Amdahl’s Law</a>/<a href="http://www.perfdynamics.com/Papers/njgCMG93.pdf" rel="nofollow">Universal Scalability Law</a>/<a href="http://www.cs.bilkent.edu.tr/%7Etugrul/CS518/Papers/little.pdf" rel="nofollow">Little’s Law</a></li>
+            <li><a href="http://cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf" rel="nofollow">Immutability Changes Everything</a></li>
+            <li><a href="http://userpage.fu-berlin.de/%7Eram/pub/pub_jf47ht81Ht/doc_kay_oop_en" rel="nofollow">Dr. Alan Kay on the Meaning of “Object-Oriented Programming”</a></li>
+            <li><a href="https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf" rel="nofollow">Command Query Responsibility Segregation</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Books</h2>
+
+          <ul>
+            <li><a href="https://www.manning.com/books/reactive-design-patterns" rel="nofollow">Reactive Design Patterns</a></li>
+            <li><a href="https://www.manning.com/books/functional-reactive-programming" rel="nofollow">Functional Reactive Programming</a></li>
+            <li><a href="https://pragprog.com/book/jaerlang2/programming-erlang" rel="nofollow">Programming in Erlang</a></li>
+            <li><a href="https://vaughnvernon.co/?page_id=168#rewam" rel="nofollow">Reactive Messaging Patterns with the Actor Model</a></li>
+            <li><a href="http://shop.oreilly.com/product/0636920043577.do" rel="nofollow">Applied Akka Patterns</a></li>
+            <li><a href="https://www.manning.com/books/reactive-web-applications" rel="nofollow">Reactive Web Applications</a></li>
+            <li><a href="https://www.manning.com/books/functional-programming-in-scala" rel="nofollow">Functional Programming in Scala</a></li>
+            <li><a href="http://www.informit.com/store/domain-driven-design-tackling-complexity-in-the-heart-9780321125217" rel="nofollow">Domain-Driven Design</a></li>
+            <li><a href="https://www.manning.com/books/functional-and-reactive-domain-modeling" rel="nofollow">Functional and Reactive Domain Modeling</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Other Resources</h2>
+
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=auYuWBudVt8" rel="nofollow">Go Reactive: Blueprint for Future Applications</a></li>
+            <li><a href="http://jonasboner.com/bla-bla-microservices-bla-bla/" rel="nofollow">bla bla microservices bla bla</a></li>
+            <li><a href="https://www.oreilly.com/ideas/reactive-programming-vs-reactive-systems" rel="nofollow">Reactive programming vs. Reactive systems</a></li>
+            <li><a href="https://www.youtube.com/watch?v=xZraNGzAX48" rel="nofollow">Beyond the Buzzword: A Reactive Web Application in Practice</a></li>
+            <li><a href="http://www.reactive-streams.org/" rel="nofollow">Reactive Streams</a></li>
+            <li><a href="https://queue.acm.org/detail.cfm?id=2610533" rel="nofollow">Don’t Settle for Eventual Consistency</a></li>
+            <li><a href="https://www.oreilly.com/ideas/design-pressures-lead-to-better-code-and-better-outcomes" rel="nofollow">Design Pressures Lead to Better Code and Better Outcomes – An Interview with Martin Thompson</a></li>
+          </ul>
         </section>
       </div>
     </div>

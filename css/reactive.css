@@ -15,3 +15,23 @@
 .reveal table {
   font-size: 32px;
 }
+
+.reveal .breadcrumb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 14px;
+  background: #444444;
+  padding: 4px;
+  padding-right: 6px;
+  border-radius: 5px 20px 20px 5px;
+}
+
+.reveal a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.reveal a.image-link {
+  text-decoration: none;
+}
