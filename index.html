@@ -110,6 +110,7 @@
 
         <section>
           <p>The decomposition of a reactive system results in components that are reactive themselves</p>
+          <p class="fragment">Their composition forms a dataflow</p>
         </section>
 
         <section>
@@ -191,12 +192,11 @@ println(c) // 42</code></pre>
           <h3>The Time Bender</h3>
 
           <ul>
-            <li class="fragment">Eliminate mutability and side effects => eliminate the impact of time on the control flow</li>
+            <li class="fragment">Reduce mutability and side effects => reduce the impact of time on the control flow</li>
             <li class="fragment">Describe programs and dependencies in terms of declarative expressions</li>
             <li class="fragment">Work on a snapshot of time</li>
             <li class="fragment"><strong>Composable</strong></li>
             <li class="fragment">Powerful and composable abstractions</li>
-            <li class="fragment">We need immutable data</li>
           </ul>
         </section>
 
@@ -269,9 +269,9 @@ println(c) // 42</code></pre>
 
           <ul>
             <li>Scalable system design.</li>
-            <li><strong>Scale up</strong> when more users are coming.</li>
-            <li><strong>Scale down</strong> on less active periods to save resources.</li>
-            <li>Our system stays <strong>responsive</strong>.</li>
+            <li class="fragment"><strong>Scale up</strong> when more users are coming.</li>
+            <li class="fragment"><strong>Scale down</strong> on less active periods to save resources.</li>
+            <li class="fragment">Our system stays <strong>responsive</strong>.</li>
           </ul>
         </section>
 
@@ -331,9 +331,10 @@ println(c) // 42</code></pre>
 
           <ul>
             <li>respond even in the face of failure (if possible)</li>
-            <li>(Even with just a failure message, it’s still very useful.);</li>
-            <li>take actions to recover themselves;</li>
-            <li><strong>react to failure</strong>.</li>
+            <li class="fragment">(Even with just a failure message, it’s still very useful.);</li>
+            <li class="fragment">take actions to recover themselves;</li>
+            <li class="fragment">protect external failing components;</li>
+            <li class="fragment"><strong>react to failure</strong>.</li>
           </ul>
         </section>
 
@@ -352,7 +353,7 @@ println(c) // 42</code></pre>
         </section>
 
         <section>
-          <h2>Latency and Failure. Synchronous and Asynchronous Thinking</h2>
+          <h2>Latency and Failure.<br />Synchronous and Asynchronous Thinking</h2>
         </section>
 
         <section>
@@ -388,9 +389,9 @@ println(c) // 42</code></pre>
               <td>2 seconds</td>
             </tr>
             <tr>
-              <td>Compress 1K bytes with Zippy</td>
-              <td>3,000</td>
-              <td>1 minute</td>
+              <td>Read 4KB from an SSD</td>
+              <td>150,000</td>
+              <td>50 minutes</td>
             </tr>
             <tr>
               <td>Round trip within same datacenter</td>
@@ -412,7 +413,9 @@ println(c) // 42</code></pre>
 
           <ul>
             <li class="fragment">Holds resources</li>
-            <li class="fragment">Introduces coupling between threads on two different machines.</li>
+            <li class="fragment">Unreliable in cases of partial failures</li>
+            <li class="fragment">Hard to parallelize</li>
+            <li class="fragment">Introduces coupling between threads on two different machines</li>
           </ul>
         </section>
 
@@ -434,11 +437,11 @@ println(c) // 42</code></pre>
           <ul>
             <li>Decreased coupling (receiver can choose how to handle the message)</li>
             <li class="fragment">Parallelize computations and combine back the results</li>
-            <li class="fragment">Messages become an object in our system we can manage</li>
+            <li class="fragment">Messages become an object in our system we can manage (put them in queues, transform/store/combine/reject them, ...)</li>
             <li class="fragment">Dynamic routing and transformation; load balancing</li>
-            <li class="fragment">Streams of messages</li>
-            <li class="fragment">Error-handling</li>
-            <li class="fragment">Reactor and Proactor patterns – (low-level) asynchronous message IO</li>
+            <li class="fragment">Real-time streams of messages</li>
+            <li class="fragment">Error-handling with messages</li>
+              <!--<li class="fragment">Reactor and Proactor patterns – (low-level) asynchronous message IO</li>-->
           </ul>
 
           <aside class="notes">
@@ -489,13 +492,12 @@ println(c) // 42</code></pre>
           <h2>Services Replication</h2>
 
           <ul>
-            <li>Location transparency</li>
+            <li class="fragment">Location transparency</li>
             <li class="fragment">How many copies for a given load? Little’s Law:
               <pre>L = λW,
-λ: request/s, W: avg. request process time in seconds,
+λ: requests/s, W: avg. request process time in seconds,
 L: number of replica workers we need so that queues don’t fill up</pre></li>
             <li class="fragment">Use bounded queues (and send rejection immediately)</li>
-            <li class="fragment">Alternative: track resources usage (memory, CPU, etc) (with messages)</li>
           </ul>
         </section>
 
@@ -504,7 +506,7 @@ L: number of replica workers we need so that queues don’t fill up</pre></li>
 
           <h2>Entities Sharding</h2>
 
-          <p>Partition entities on different nodes (based on e.g. id hashing)</p>
+          <p>Partition entities on different nodes<br />(based on e.g. id hashing)</p>
         </section>
 
         <section>
