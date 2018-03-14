@@ -1,8 +1,8 @@
-# Reactive Programming and Systems
+# Reactive Systems
 
-This is the introductory presentation of the [“Reactive Programming and Systems” community group](http://dev.bg/groups/reactive-programming/).
+You can view the presentation at [https://zstoychev.github.io/reactive-systems-presentation](https://zstoychev.github.io/reactive-systems-presentation).
 
-You can view it at [https://zstoychev.github.io/reactive-systems-presentation](https://zstoychev.github.io/reactive-systems-presentation).
+An article based on the presentation is available at [https://zstoychev.github.io/reactive-systems.html](https://zstoychev.github.io/reactive-systems.html) (in Bulgarian).
 
 In the [examples](examples) directory you can find some Elm and Java FRP examples.
 
