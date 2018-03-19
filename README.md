@@ -31,7 +31,7 @@ In the [examples](examples) directory you can find some Elm and Java FRP example
 * [Applied Akka Patterns](http://shop.oreilly.com/product/0636920043577.do)
 * [Reactive Web Applications](https://www.manning.com/books/reactive-web-applications)
 * [Functional Programming in Scala](https://www.manning.com/books/functional-programming-in-scala)
-* [Domain-Driven Design Distilled](https://vaughnvernon.co/?page_id=168#distilled)
+* [Domain-Driven Design](http://www.informit.com/store/domain-driven-design-tackling-complexity-in-the-heart-9780321125217)
 * [Functional and Reactive Domain Modeling](https://www.manning.com/books/functional-and-reactive-domain-modeling)
 
 # Other Useful Resources
